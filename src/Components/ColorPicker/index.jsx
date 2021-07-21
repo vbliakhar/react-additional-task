@@ -2,22 +2,30 @@ import React from "react";
 import "./index.scss";
 class ColorPicker extends React.Component {
   state = {
-    activeIndex: 1,
+    activeIndex: 0,
+  };
+  setActiveIndex = (index) => {
+    this.setState({ activeIndex: index });
   };
   render() {
-    console.log(this.props);
-
     return (
       <div className="ColorPicker">
         <h1>{this.props.title}</h1>
         <div className="ColorBlock">
-          {this.props.options.map(({ label, color }) => {
+          {this.props.options.map(({ label, color }, index) => {
             return (
-              <span
+              <button
+                onClick={() => this.setActiveIndex(index)}
                 key={label}
                 className="ColorPicker__option"
-                style={{ background: color }}
-              ></span>
+                style={{
+                  background: color,
+                  border:
+                    index === this.state.activeIndex
+                      ? "solid 2px black"
+                      : "none",
+                }}
+              ></button>
             );
           })}
         </div>

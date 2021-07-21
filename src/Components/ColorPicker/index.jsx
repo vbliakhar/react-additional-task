@@ -7,23 +7,28 @@ class ColorPicker extends React.Component {
   setActiveIndex = (index) => {
     this.setState({ activeIndex: index });
   };
+  makeOptionsClassName = (index) => {
+    const optionClasses = ["ColorPicker__option"];
+    if (index === this.state.activeIndex) {
+      optionClasses.push("active");
+    }
+    return optionClasses.join(" ");
+  };
   render() {
+    const activeOptionLabel = this.props.options[this.state.activeIndex].label;
     return (
       <div className="ColorPicker">
         <h1>{this.props.title}</h1>
+        <p>{activeOptionLabel}</p>
         <div className="ColorBlock">
           {this.props.options.map(({ label, color }, index) => {
             return (
               <button
                 onClick={() => this.setActiveIndex(index)}
                 key={label}
-                className="ColorPicker__option"
+                className={this.makeOptionsClassName(index)}
                 style={{
                   background: color,
-                  border:
-                    index === this.state.activeIndex
-                      ? "solid 2px black"
-                      : "none",
                 }}
               ></button>
             );
